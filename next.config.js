@@ -16,6 +16,10 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    loader: "imgix",
+    path: "/",
+  },
 };
 
 module.exports = nextConfig;
