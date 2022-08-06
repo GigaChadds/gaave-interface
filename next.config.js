@@ -17,8 +17,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    loader: "imgix",
-    path: "/",
+    loader: "akamai",
+    path: "",
   },
 };
 
