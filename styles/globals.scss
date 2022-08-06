@@ -1,0 +1,101 @@
+@import "~bootstrap/scss/bootstrap";
+
+@import "styles/variables.module.scss";
+@import "../styles/mixin.module.scss";
+
+@import "styles/base/base";
+@import "styles/base/typography";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+
+  // Set your font family here
+  font-family: "Source Sans Pro", "Antonio", "Anton", "Lato", sans-serif;
+  position: relative;
+
+  overflow-x: hidden;
+  overscroll-behavior: none;
+
+  &::-webkit-scrollbar {
+    display: block;
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    color: $darkwhite;
+    background-color: $darkwhite;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    color: $purple;
+    background-color: $purple;
+  }
+}
+
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+html {
+  height: -webkit-fill-available;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 0rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "SFProBlack";
+  src: url("../public/assets/font/SF-Pro-Rounded-Black.otf");
+}
+
+@font-face {
+  font-family: "SFProBold";
+  src: url("../public/assets/font/SF-Pro-Rounded-Bold.otf");
+}
+
+@font-face {
+  font-family: "SFProHeavy";
+  src: url("../public/assets/font/SF-Pro-Rounded-Heavy.otf");
+}
+
+@font-face {
+  font-family: "SFProLight";
+  src: url("../public/assets/font/SF-Pro-Rounded-Light.otf");
+}
+
+@font-face {
+  font-family: "SFProMedium";
+  src: url("../public/assets/font/SF-Pro-Rounded-Medium.otf");
+}
+
+@font-face {
+  font-family: "SFProRegular";
+  src: url("../public/assets/font/SF-Pro-Rounded-Regular.otf");
+}
+
+@font-face {
+  font-family: "SFProSemibold";
+  src: url("../public/assets/font/SF-Pro-Rounded-Semibold.otf");
+}
+
+@font-face {
+  font-family: "SFProThin";
+  src: url("../public/assets/font/SF-Pro-Rounded-Thin.otf");
+}
+
+@font-face {
+  font-family: "SFProUltralight";
+  src: url("../public/assets/font/SF-Pro-Rounded-Ultralight.otf");
+}

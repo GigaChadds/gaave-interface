@@ -1,0 +1,78 @@
+@import "../../styles/variables.module.scss";
+@import "../../styles/mixin.module.scss";
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin: 1rem 0;
+
+  @include l {
+    margin: 2rem 0;
+  }
+
+  & p {
+    font-family: $fontThin;
+    font-size: 1.4rem;
+
+    @include l {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+.main {
+  position: relative;
+  width: 90%;
+
+  @include l {
+    width: 100%;
+    max-width: 80rem;
+  }
+
+  height: 2rem;
+  background-color: $white;
+  border-radius: 1.5rem;
+}
+
+.covered {
+  position: absolute;
+  height: 2rem;
+  left: 0;
+  top: 0;
+
+  background-color: $purple;
+
+  animation: grow 2s ease-out;
+}
+
+@keyframes grow {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: var(--to-width);
+  }
+}
+
+.count {
+  position: relative;
+  position: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%;
+  max-width: 80rem;
+
+  text-align: left;
+  font-family: $fontThin;
+  font-size: 1.4rem;
+
+  @include l {
+    font-size: 1.8rem;
+  }
+}

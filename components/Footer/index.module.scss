@@ -1,0 +1,17 @@
+@import '../../styles/variables.module.scss';
+@import '../../styles/mixin.module.scss';
+
+.container {
+  position: absolute;
+  bottom: 0;
+
+  background-color: transparent;
+  width: 100vw;
+
+  padding: 1rem 0;
+
+  & p {
+    color: $black;
+    font-family: $fontLight;
+  }
+}

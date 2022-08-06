@@ -1,0 +1,67 @@
+@import "styles/variables.module.scss";
+@import "../styles/mixin.module.scss";
+
+.container {
+  position: relative;
+  background-color: $darkwhite;
+  min-height: 100vh;
+  width: 100vw;
+
+  @include l {
+    min-height: none;
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  height: 100%;
+  width: 100%;
+
+  padding-top: calc(7rem + 2rem);
+
+  @include l {
+    flex-direction: row;
+    padding-top: calc(7rem + 3rem);
+  }
+
+  &_left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 90%;
+
+    @include l {
+      width: 90%;
+      max-width: 50rem;
+      margin-right: 5rem;
+    }
+
+    // Hackish way, very bad practice. Should use grid but lazy
+    &_sub {
+      width: 100%;
+      margin-bottom: 2rem;
+
+      @include l {
+        margin-bottom: 5rem;
+      }
+    }
+  }
+}
+
+.avail_campaign {
+  width: 90%;
+
+  @include l {
+    width: 90%;
+    max-width: 70rem;
+  }
+}

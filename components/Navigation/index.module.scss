@@ -1,0 +1,75 @@
+@import "../../styles/variables.module.scss";
+@import "../../styles/mixin.module.scss";
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  z-index: 4;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 100%;
+  width: 100vw;
+
+  padding: 1.5rem;
+  padding-left: 5vw;
+  padding-right: 5vw;
+
+  background-color: transparent;
+
+  @include l {
+    padding-left: 10vw;
+    padding-right: 10vw;
+  }
+
+  & h2 {
+    font-family: $fontHeavy;
+    color: $black;
+    padding: 0;
+    margin: 0;
+
+    font-size: 2.4rem;
+    cursor: pointer;
+
+    @include l {
+      font-size: 3.2rem;
+    }
+
+    & span {
+      color: $purple;
+    }
+  }
+
+  &_sub {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &_logo {
+    position: relative;
+    width: 9.33rem;
+    height: 2rem;
+
+    @include l {
+      width: 14rem;
+      height: 3rem;
+    }
+  }
+}
+
+.connect_button {
+  font-size: 1.4rem;
+
+  @include l {
+    font-size: 1.8rem;
+  }
+}

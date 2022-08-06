@@ -1,0 +1,59 @@
+@import "styles/variables.module.scss";
+@import "../styles/mixin.module.scss";
+
+.container {
+  position: relative;
+  background-color: $darkwhite;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.main {
+  @include l {
+    padding-top: calc(7rem + 3rem);
+  }
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 100%;
+  width: 100%;
+
+  padding-top: calc(7rem + 2rem);
+
+  & h2 {
+    width: 90%;
+    font-family: $fontHeavy;
+    font-size: 2.4rem;
+    max-width: 80rem;
+
+    @include l {
+      font-size: 3.2rem;
+    }
+  }
+
+  & p {
+    font-family: $fontRegular;
+    text-align: left;
+    font-size: 1.4rem;
+
+    width: 90%;
+
+    @include l {
+      max-width: 80rem;
+      font-size: 1.8rem;
+    }
+  }
+
+  &_poc {
+    font-family: $fontThin !important;
+    font-size: 1rem !important;
+
+    @include l {
+      font-size: 1.4rem !important;
+    }
+  }
+}
