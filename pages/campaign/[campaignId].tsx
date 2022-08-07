@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Meta from "../../components/Meta";
 import ProgressBar from "../../components/ProgressBar";
 import StakingTable from "../../components/StakingTable";
 import styles from "../../styles/Campaign.module.scss";
@@ -18,6 +19,7 @@ const CampaignPage = () => {
 
   return (
     <div className={styles.container}>
+      <Meta />
       <div className={styles.main}>
         <h2>{campaignData.title}</h2>
         <ProgressBar
@@ -30,6 +32,16 @@ const CampaignPage = () => {
           {campaignData.contactPersonEmail}
         </p>
 
+        <div className={styles.others}>
+          <div>
+            <p>You are eligible to claim for your milestone NFT!</p>
+            <button>Claim</button>
+          </div>
+          <div>
+            <p>You have outstanding yield to claim</p>
+            <button>Claim</button>
+          </div>
+        </div>
         <StakingTable />
       </div>
     </div>
