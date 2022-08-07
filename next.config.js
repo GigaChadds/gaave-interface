@@ -20,6 +20,10 @@ const nextConfig = {
   //   loader: "akamai",
   //   path: "",
   // },
+  images: {
+    loader: "akamai",
+    path: "/",
+  },
 };
 
 module.exports = nextConfig;
