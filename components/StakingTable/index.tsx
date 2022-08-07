@@ -5,77 +5,54 @@ import WETHLogo from "../../public/assets/coins/weth.svg";
 import USDTLogo from "../../public/assets/coins/usdt.svg";
 import WMaticLogo from "../../public/assets/coins/wmatic.svg";
 import DaiLogo from "../../public/assets/coins/dai.svg";
+import WBTCLogo from "../../public/assets/coins/wbtc.svg";
+import AaveLogo from "../../public/assets/coins/aave.svg";
 import Image from "next/image";
+import { useQuery } from '@apollo/client';
+import QUERY_RESERVES from './reserves.graphql';
 
-const cryptoCurrencies = [
-  {
-    tokenId: 1,
-    tokenName: "WMATIC",
-    balance: 0,
-    apy: 17.8,
-    tokenImage: WMaticLogo,
-  },
-  {
-    tokenId: 2,
-    tokenName: "WETH",
-    balance: 0,
-    apy: 2.8,
-    tokenImage: WETHLogo,
-  },
-  {
-    tokenId: 3,
-    tokenName: "USDT",
-    balance: 0,
-    apy: 12.8,
-    tokenImage: USDTLogo,
-  },
-  {
-    tokenId: 4,
-    tokenName: "USDC",
-    balance: 0,
-    apy: 30.8,
-    tokenImage: USDCLogo,
-  },
-  {
-    tokenId: 5,
-    tokenName: "DAI",
-    balance: 0,
-    apy: 9.8,
-    tokenImage: DaiLogo,
-  },
-];
+const coinMap: {[key: string]: any} = {
+  "DAI": DaiLogo,
+  "USDC": USDCLogo,
+  'USDT': USDTLogo,
+  'WBTC': WBTCLogo,
+  'AAVE': AaveLogo,
+  'WETH': WETHLogo,
+  'Wrapped Matic': WMaticLogo
+}
 
 const StakingTable = () => {
+  const { data } = useQuery(QUERY_RESERVES);
   return (
     <table className={styles.container}>
       <tr className={styles.container_header}>
         <th>Assets</th>
         <th>Balance</th>
-        <th>APY</th>
+        <th>APR</th>
         <th></th>
       </tr>
-      {cryptoCurrencies.map((crypto) => (
+      {data?.reserves.map((crypto: any) => (
         <tr
-          key={`${crypto.tokenName}_${crypto.tokenId}`}
+          key={`${crypto.underlyingAsset}`}
           className={styles.container_data}
         >
           <td>
             <div className={styles.row}>
               <div className={styles.container_data_image}>
-                <Image
-                  src={crypto.tokenImage}
-                  alt={crypto.tokenName}
+                {coinMap[crypto.name] && <Image
+                  src={coinMap[crypto.name]}
+                  alt={crypto.name}
                   layout="fill"
-                />
+                />}
               </div>
-              {crypto.tokenName}
+              {crypto.name}
             </div>
           </td>
           <td>
             <CountUp start={0} end={crypto.balance} decimals={4} duration={2} />
           </td>
           <td>
-            <CountUp start={0} end={crypto.apy} decimals={1} duration={2} />%
+            <CountUp start={0} end={crypto.liquidityRate/Math.pow(10,27)} decimals={2} duration={2} />%
           </td>
           <td className={styles.container_actionables}>
             <button type="button" onClick={() => {}}>
