@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import Button from "../../components/Button";
 import CampaignForm from "../../components/CampaignForm";
+import Meta from "../../components/Meta";
 import { CampaignContext } from "../../context/campaignContext";
 import styles from "../../styles/Campaign.module.scss";
 import { uploadToIpfs } from "../../utils/api";
@@ -34,6 +35,7 @@ const CreateCampaignPage = () => {
 
   return (
     <div className={styles.container}>
+      <Meta />
       <div className={styles.main}>
         <h2>Create Campaign</h2>
         <CampaignForm />
