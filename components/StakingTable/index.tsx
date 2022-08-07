@@ -22,7 +22,9 @@ const coinMap: {[key: string]: any} = {
 }
 
 const StakingTable = () => {
-  const { data } = useQuery(QUERY_RESERVES);
+  const { data } = useQuery(QUERY_RESERVES, {
+    context: { clientName: "aave" }
+  });
   return (
     <table className={styles.container}>
       <tr className={styles.container_header}>
