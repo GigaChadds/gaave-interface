@@ -20,9 +20,18 @@ const nextConfig = {
   //   loader: "akamai",
   //   path: "",
   // },
-  images: {
-    loader: "akamai",
-    path: "/",
+  // images: {
+  //   loader: "akamai",
+  //   path: "/",
+  // },
+  // images: {
+  //   loader: "imgix",
+  //   path: "/",
+  // },
+  experimental: {
+    images: {
+      unoptimized: true,
+    },
   },
 };
 
