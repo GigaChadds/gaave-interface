@@ -8,10 +8,14 @@ import useCheckNetwork from "../hooks/useCheckNetwork";
 import AvailableCampaigns from "../components/AvailableCampaigns";
 import CurrentBadges from "../components/CurrentBadges";
 import UnclaimedYield from "../components/UnclaimedYield";
+import { useQuery } from '@apollo/client';
+import QUERY_RESERVES from './reserves.graphql';
 
 const Index: NextPage = () => {
   const { address } = useAccount();
   const { rightNetwork, error: networkError } = useCheckNetwork();
+  // Query reserve data
+  const { data } = useQuery(QUERY_RESERVES);
 
   return (
     <div className={styles.container}>
