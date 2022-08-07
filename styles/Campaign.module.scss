@@ -57,3 +57,30 @@
     }
   }
 }
+
+.submit {
+  margin: 1rem 0;
+
+  position: relative;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  @include l {
+    margin: 2rem 0;
+  }
+}
+
+.error {
+  font-family: $fontLight;
+  font-size: 1.2rem;
+  color: $red;
+  text-align: center !important;
+
+  @include l {
+    font-size: 1.4rem;
+  }
+}
