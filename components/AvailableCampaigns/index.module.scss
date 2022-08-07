@@ -67,9 +67,9 @@
     border-radius: 2rem;
   }
 
-  &:hover {
-    cursor: url("../../public/assets/misc/cursor.png"), pointer;
-  }
+  // &:hover {
+  //   cursor: url("../../public/assets/misc/cursor.png"), pointer;
+  // }
 }
 
 .content {
@@ -85,4 +85,8 @@
   justify-content: center;
 
   overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
