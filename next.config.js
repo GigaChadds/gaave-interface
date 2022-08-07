@@ -28,11 +28,11 @@ const nextConfig = {
   //   loader: "imgix",
   //   path: "/",
   // },
-  experimental: {
-    images: {
-      unoptimized: true,
-    },
-  },
+  // experimental: {
+  //   images: {
+  //     unoptimized: true,
+  //   },
+  // },
 };
 
 module.exports = nextConfig;
