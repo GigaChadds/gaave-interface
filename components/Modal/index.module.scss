@@ -1,0 +1,164 @@
+@import "../../styles/variables.module.scss";
+@import "../../styles/mixin.module.scss";
+
+.background {
+  position: fixed;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  position: relative;
+  background-color: $darkwhite;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  // justify-content: space-evenly;
+
+  width: 32rem;
+  height: 30rem;
+  padding: 3rem;
+
+  @include l {
+    width: 60rem;
+    height: 40rem;
+    padding: 5rem;
+  }
+
+  & p {
+    font-family: $fontRegular;
+    color: $black;
+    font-size: 1.8rem;
+    margin: 0;
+    text-align: center;
+
+    @include l {
+      font-size: 2.4rem;
+    }
+  }
+}
+
+.close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  height: 3rem;
+  width: 3rem;
+
+  cursor: pointer;
+
+  @include l {
+    height: 3rem;
+    width: 3rem;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-family: $fontMedium;
+  color: $black;
+  font-size: 1.8rem;
+
+  margin-bottom: 2rem;
+
+  @include l {
+    font-size: 2.4rem;
+  }
+
+  &_image {
+    position: relative;
+    height: 2rem;
+    width: 2rem;
+
+    margin: 0 0.5rem;
+
+    @include l {
+      height: 3rem;
+      width: 3rem;
+
+      margin: 0 0.7rem;
+    }
+  }
+}
+
+.counter {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & label {
+    font-family: $fontRegular;
+    font-size: 1.4rem;
+
+    @include l {
+      font-size: 1.8rem;
+    }
+  }
+
+  & span {
+    font-family: $fontLight;
+    font-size: 1.4rem;
+    cursor: pointer;
+    @include l {
+      font-size: 1.8rem;
+    }
+  }
+
+  & input {
+    margin: 1rem 0;
+    width: 100%;
+    padding: 1.8rem 1.4rem;
+    font-size: 1.8rem;
+
+    @include l {
+      font-size: 2.4rem;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.actionable {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: row;
+  justify-content: space-around;
+  margin: 2rem 0;
+
+  & button {
+    position: relative;
+    border: none;
+    padding: 0.5rem 0.5rem;
+
+    font-family: $fontMedium;
+    background-color: $purple;
+    color: $white;
+
+    font-size: 1.8rem;
+    width: 50%;
+
+    margin: 0 1rem;
+
+    border-radius: 2rem;
+
+    @include l {
+      font-size: 2.4rem;
+    }
+  }
+}
