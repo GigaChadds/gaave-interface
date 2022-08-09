@@ -1,0 +1,17 @@
+{
+  reserves {
+    name
+    underlyingAsset
+    
+    liquidityRate 
+    stableBorrowRate
+    variableBorrowRate
+    
+    aEmissionPerSecond
+    vEmissionPerSecond
+    sEmissionPerSecond
+    
+    totalATokenSupply
+    totalCurrentVariableDebt
+  }
+}
