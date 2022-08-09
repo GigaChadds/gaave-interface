@@ -32,9 +32,9 @@
       height: 3rem;
     }
 
-    &:hover {
-      cursor: url("../../public/assets/misc/cursor.png"), pointer;
-    }
+    // &:hover {
+    //   cursor: url("../../public/assets/misc/cursor.png"), pointer;
+    // }
 
     &:disabled {
       cursor: not-allowed;

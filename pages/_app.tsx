@@ -7,6 +7,7 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import envConfig from "../utils/envConfig";
+import CampaignContextProvider from "../context/campaignContext";
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 
@@ -51,11 +52,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         initialChain={envConfig.MAINNET ? chain.polygon : chain.polygonMumbai}
         coolMode
       >
-        <ApolloProvider client={client}>
+      <ApolloProvider client={client}>
+        <CampaignContextProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </ApolloProvider>
+        </CampaignContextProvider>
+      </ApolloProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

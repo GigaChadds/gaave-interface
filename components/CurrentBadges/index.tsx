@@ -16,6 +16,14 @@ const listOfUnclaimedBadges = [
     campaignId: 2,
     title: "Relief for Taiwan",
   },
+  {
+    campaignId: 3,
+    title: "Relief for Singapore",
+  },
+  {
+    campaignId: 4,
+    title: "Relief for Malaysia",
+  },
 ];
 
 const listOfClaimedBadge = [Badge1, Badge2, Badge3, Badge4, Badge5];

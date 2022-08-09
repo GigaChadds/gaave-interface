@@ -8,8 +8,8 @@
   width: 100vw;
 
   @include l {
-    min-height: none;
-    height: 100vh;
+    // min-height: none;
+    min-height: 100vh;
     overflow: hidden;
   }
 }

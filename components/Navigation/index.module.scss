@@ -24,6 +24,7 @@
   padding-right: 5vw;
 
   background-color: transparent;
+  backdrop-filter: blur(0.6rem);
 
   @include l {
     padding-left: 10vw;
