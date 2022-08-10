@@ -17,7 +17,8 @@ const Modal = ({
   const [amount, setAmount] = useState<number>(0.0);
 
   return (
-    <div className={styles.background}>
+    <>
+      <div className={styles.background} onClick={closeModal}></div>
       <div className={styles.container}>
         <div className={styles.close}>
           <VscChromeClose size="100%" onClick={closeModal} />
@@ -52,7 +53,7 @@ const Modal = ({
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
