@@ -21,6 +21,18 @@
     }
   }
 
+  &_loader {
+    & td {
+      margin: 2rem 0;
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+    }
+  }
+
   &_data {
     row-gap: 1rem !important;
     font-family: $fontRegular;
