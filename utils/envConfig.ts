@@ -1,6 +1,8 @@
 const envConfig = {
   MAINNET: process.env.NEXT_PUBLIC_MAINNET === "true" ? true : false,
   CONTRACT_ADDRESS: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || "",
+  BADGE_ADDRESS: process.env.BADGE_PUBLIC_CONTRACT_ADDRESS || "",
+  BADGE_NAME: process.env.BADGE_PUBLIC_CONTRACT_NAME || "",
   CONTRACT_ADDRESS_BADGES:
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS_BADGES || "",
   CONTRACT_DEPLOYED:

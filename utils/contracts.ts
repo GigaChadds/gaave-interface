@@ -24,6 +24,23 @@ export const getWagmiContractParams = () => {
   }
 };
 
+export const getBadgeContractParams = () => {
+  try {
+    // const contract = require(`../contracts/${chain}/${envConfig.CONTRACT_NAME}.json`);
+    const contract = require(`../contracts/mumbai/GAAVEBadge.json`);
+    return {
+      addressOrName: "0x1E85B71b031Eb76BFE09b3551c09FDd2e8f20c90",
+      contractInterface: contract.abi,
+    };
+  } catch (error) {
+    console.log("[Badge] Contract does not exist!");
+    return {
+      addressOrName: envConfig.BADGE_ADDRESS,
+      contractInterface: [],
+    };
+  }
+};
+
 export const getERC20TokenContract = (tokenAddress: string) => {
   // Strictly only pass in tokenAddress
   let tokenName = "";

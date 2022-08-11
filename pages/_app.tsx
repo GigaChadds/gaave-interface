@@ -16,7 +16,7 @@ const aave = new HttpLink({
 });
 
 const gaave = new HttpLink({
-  uri: ''
+  uri: 'https://api.thegraph.com/subgraphs/name/bennettyong/gaave'
 });
 
 const client = new ApolloClient({
