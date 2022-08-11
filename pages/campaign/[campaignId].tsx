@@ -6,7 +6,6 @@ import StakingTable from "../../components/StakingTable";
 import useMintBadge from "../../hooks/useMintBadge";
 import styles from "../../styles/Campaign.module.scss";
 import { useRouter } from "next/router";
-import useClaimYield from "../../hooks/useClaimYield";
 
 const mockCampaignData = {
   organization: "GEN3 Studios",
@@ -38,12 +37,12 @@ const CampaignPage = () => {
       campaignId as unknown as number,
       address!!
     );
-    // if (write) {
-    //   write({
-    //     recklesslySetUnpreparedArgs: campaignId,
-    //     recklesslySetUnpreparedOverrides: overridesArgs,
-    //   });
-    // }
+    if (write) {
+      write({
+        recklesslySetUnpreparedArgs: campaignId,
+        recklesslySetUnpreparedOverrides: overridesArgs,
+      });
+    }
   };
 
   useEffect(() => {

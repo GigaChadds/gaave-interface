@@ -10,7 +10,6 @@ import Modal from "../Modal";
 import { coinMap } from "../../utils/constants/token";
 import { MoonLoader } from "react-spinners";
 import useFetchTokenBalance from "../../hooks/useFetchStakedTokenBalance";
-import useClaimYield from "../../hooks/useClaimYield";
 import { useAccount, useContract, useContractRead, useProvider } from "wagmi";
 import { getERC20TokenContract } from "../../utils/contracts";
 
@@ -35,6 +34,7 @@ interface GraphQLAaveCrypto {
 export interface GraphQLAaveCrypto_Balance extends GraphQLAaveCrypto {
   balance: number;
   staked: number;
+  claimable: number;
 }
 
 const StakingTable = ({ campaignId }: { campaignId: number }) => {
@@ -64,6 +64,7 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
       variableBorrowRate: "",
       balance: 0,
       staked: 0,
+      claimable: 0,
     }
   );
   const [type, setType] = useState<ActionType>(ActionType.DEPOSIT);
@@ -74,6 +75,7 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
     const output = _data.map(async (crypto: GraphQLAaveCrypto) => {
       const contractObj = getERC20TokenContract(crypto.underlyingAsset);
       let tokenBalance;
+      let claimable;
 
       if (!contractObj) {
         tokenBalance = 0;
@@ -97,29 +99,6 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
     });
     const awaited_output = await Promise.all(output);
     setTokens(awaited_output);
-  };
-
-  const {
-    transactionHash,
-    isClaiming,
-    error,
-    write,
-    reset,
-    prepareOverridesArgs,
-  } = useClaimYield();
-
-  const claimYield = async (tokenAddress: string) => {
-    const overridesArgs = await prepareOverridesArgs(
-      campaignId as unknown as number,
-      tokenAddress as unknown as string,
-      address!!
-    );
-    if (write) {
-      write({
-        recklesslySetUnpreparedArgs: [campaignId, tokenAddress],
-        recklesslySetUnpreparedOverrides: overridesArgs,
-      });
-    }
   };
 
   useEffect(() => {
@@ -211,12 +190,6 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
                     }}
                   >
                     Deposit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => claimYield(crypto.underlyingAsset)}
-                  >
-                    Claim Yield
                   </button>
                 </td>
               </tr>
