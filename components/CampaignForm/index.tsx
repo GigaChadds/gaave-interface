@@ -120,7 +120,7 @@ const CampaignForm = () => {
           <BiInfoCircle
             size={20}
             color="black"
-            data-tip="1% of target amount X 2 days"
+            data-tip="3% of target amount X 1 days"
           />
         </label>
         <ReactTooltip place="top" type="light" effect="float" />
