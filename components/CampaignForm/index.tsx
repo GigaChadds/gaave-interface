@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import Button from "../Button";
+import { useContext, useState } from "react";
 import styles from "./index.module.scss";
 import Dropzone from "react-dropzone";
 import Image from "next/image";
@@ -13,43 +12,15 @@ import {
   SET_CAMPAIGN_FORM_TNC,
   SET_CAMPAIGN_FORM_BADGE1,
   SET_CAMPAIGN_FORM_BADGE2,
-  SET_CAMPAIGN_FORM_BADGE3,
 } from "../../context/actionType";
 import { BiInfoCircle } from "react-icons/bi";
 import ReactTooltip from "react-tooltip";
 
-interface ICampaign {
-  organization: string;
-  contactPersonEmail: string;
-  title: string;
-  description: string;
-  amount: number;
-}
-
-const defaultCampaignData = {
-  organization: "",
-  contactPersonEmail: "",
-  title: "",
-  description: "",
-  amount: 0,
-};
-
 const CampaignForm = () => {
   const { appState: CampaignFormState, appDispatch: CampaignFormDispatch } =
     useContext(CampaignContext);
-  const [campaignDetails, setCampaignDetails] =
-    useState<ICampaign>(defaultCampaignData);
-  const [agreedToTnc, setAgreedToTnc] = useState<boolean>(false);
   const [badge1, setBadge1] = useState<any>();
   const [badge2, setBadge2] = useState<any>();
-  const [badge3, setBadge3] = useState<any>();
-
-  const handleChange = (field: string, value: string | number) => {
-    setCampaignDetails({
-      ...campaignDetails,
-      [field]: value,
-    });
-  };
 
   const displayImageFromFile = (file: File) => {
     const objectUrl = URL.createObjectURL(file);
@@ -149,7 +120,7 @@ const CampaignForm = () => {
           <BiInfoCircle
             size={20}
             color="black"
-            data-tip="1% of target amount X 2 days"
+            data-tip="3% of target amount X 1 days"
           />
         </label>
         <ReactTooltip place="top" type="light" effect="float" />
@@ -226,49 +197,6 @@ const CampaignForm = () => {
               <input {...getInputProps()} />
               <span className={styles.dropzone_text}>
                 Drop Badge 2 image here, or click to select file
-              </span>
-            </div>
-          )}
-        </Dropzone>
-        <label>
-          Upload Badge 3 Image:{" "}
-          <BiInfoCircle
-            size={20}
-            color="black"
-            data-tip="5% of target amount X 1 week"
-          />
-        </label>
-        <ReactTooltip place="top" type="light" effect="float" />
-        {badge3 && (
-          <div className={styles.previewImage}>
-            {displayImageFromFile(badge3)}
-          </div>
-        )}
-        <Dropzone
-          onDrop={(acceptedFiles) => {
-            setBadge3(
-              acceptedFiles.map((file) =>
-                Object.assign(file, {
-                  preview: URL.createObjectURL(file),
-                })
-              )[0]
-            );
-            CampaignFormDispatch({
-              type: SET_CAMPAIGN_FORM_BADGE3,
-              value: acceptedFiles.map((file) =>
-                Object.assign(file, {
-                  preview: URL.createObjectURL(file),
-                })
-              )[0],
-            });
-          }}
-          multiple={false}
-        >
-          {({ getRootProps, getInputProps }) => (
-            <div {...getRootProps({ className: styles.dropzone })}>
-              <input {...getInputProps()} />
-              <span className={styles.dropzone_text}>
-                Drop Badge 3 image here, or click to select file
               </span>
             </div>
           )}

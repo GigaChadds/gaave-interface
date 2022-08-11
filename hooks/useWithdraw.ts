@@ -1,4 +1,5 @@
 import envConfig from "../utils/envConfig";
+import { BigNumber, ethers } from "ethers";
 import { getWagmiContractParams } from "../utils/contracts";
 
 import { useContract, useContractWrite, useProvider } from "wagmi";
@@ -6,11 +7,11 @@ import { useEffect, useState } from "react";
 
 const INSUFFICIENT_FUNDS_ERROR_CODE = "INSUFFICIENT_FUNDS";
 
-const useClaimYield = () => {
+const useWithdraw = () => {
   const contractParams = getWagmiContractParams();
   const provider = useProvider();
   const [transactionHash, setTransactionHash] = useState<string>("");
-  const [isClaiming, setIsClaiming] = useState<boolean>(false);
+  const [isWithdrawing, setIsWithdrawing] = useState<boolean>(false);
 
   const contract = useContract({
     ...contractParams,
@@ -20,14 +21,19 @@ const useClaimYield = () => {
   const prepareOverridesArgs = async (
     campaignId: number,
     tokenAddress: string,
+    amount: string,
     account: string
   ) => {
     let estimatedGas = 200000;
     try {
-      const estimatedGasFromContract =
-        await contract.estimateGas.claimableToken(campaignId, tokenAddress, {
+      const estimatedGasFromContract = await contract.estimateGas.withdraw(
+        campaignId,
+        tokenAddress,
+        ethers.utils.parseEther(amount),
+        {
           from: account,
-        });
+        }
+      );
       estimatedGas = estimatedGasFromContract.mul(11).div(10).toNumber();
       console.log("estimatedGas for Sale", estimatedGas);
     } catch (error: any) {
@@ -49,7 +55,7 @@ const useClaimYield = () => {
   const { data, isLoading, error, write, reset } = useContractWrite({
     mode: "recklesslyUnprepared",
     ...contractParams,
-    functionName: "claimableToken",
+    functionName: "withdraw",
     chainId: envConfig.MAINNET ? 1 : 80001,
   });
 
@@ -57,7 +63,7 @@ const useClaimYield = () => {
     if (data) {
       const txnReceipt = await data.wait();
       setTransactionHash(txnReceipt.transactionHash);
-      setIsClaiming(false);
+      setIsWithdrawing(false);
     }
   };
 
@@ -71,19 +77,19 @@ const useClaimYield = () => {
 
   useEffect(() => {
     if (isLoading) {
-      setIsClaiming(true);
+      setIsWithdrawing(true);
     } else {
       if (transactionHash) {
-        setIsClaiming(false);
+        setIsWithdrawing(false);
       } else if (error) {
-        setIsClaiming(false);
+        setIsWithdrawing(false);
       }
     }
   }, [isLoading]);
 
   return {
     transactionHash,
-    isClaiming,
+    isWithdrawing,
     error,
     write,
     reset,
@@ -91,4 +97,4 @@ const useClaimYield = () => {
   };
 };
 
-export default useClaimYield;
+export default useWithdraw;
