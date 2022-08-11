@@ -1,43 +1,11 @@
 {
-  "address": "0x5174092a856D2d7B6E4471c36C85F25927dCF00C",
+  "address": "0xBD21A10F619BE90d6066c941b04e340841F1F989",
   "abi": [
     {
       "inputs": [
-        {
-          "internalType": "contract IWETHGateway",
-          "name": "_WETH_GATEWAY",
-          "type": "address"
-        },
-        {
-          "internalType": "contract IPool",
-          "name": "_AAVE_POOL",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "_WETH",
-          "type": "address"
-        },
-        {
-          "internalType": "contract IERC20[]",
-          "name": "_tokenAddresses",
-          "type": "address[]"
-        },
-        {
-          "internalType": "contract IERC20[]",
-          "name": "_ATokenAddresses",
-          "type": "address[]"
-        },
-        {
-          "internalType": "address[]",
-          "name": "_priceFeeds",
-          "type": "address[]"
-        },
-        {
-          "internalType": "contract IGAAVEBadge",
-          "name": "_GAAVEBadge",
-          "type": "address"
-        }
+        { "internalType": "string", "name": "name", "type": "string" },
+        { "internalType": "string", "name": "symbol", "type": "string" },
+        { "internalType": "uint8", "name": "decimals", "type": "uint8" }
       ],
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -46,649 +14,163 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
+          "indexed": true,
           "internalType": "address",
-          "name": "_campaignAddress",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "spender",
           "type": "address"
         },
         {
           "indexed": false,
           "internalType": "uint256",
-          "name": "_campaignId",
+          "name": "value",
           "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
         },
         {
           "indexed": false,
-          "internalType": "uint256[]",
-          "name": "_thresholds",
-          "type": "uint256[]"
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
         }
       ],
-      "name": "CampaignProposed",
+      "name": "Transfer",
       "type": "event"
     },
     {
-      "anonymous": false,
       "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "_id",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "address",
-          "name": "_address",
-          "type": "address"
-        }
+        { "internalType": "address", "name": "owner", "type": "address" },
+        { "internalType": "address", "name": "spender", "type": "address" }
       ],
-      "name": "ClaimBadge",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_tokenAddress",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "Deposited",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "DepositedETH",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_tokenAddress",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "Withdrawn",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "WithdrawnETH",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "AAVE_ETH_POOL",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "AAVE_POOL",
-      "outputs": [
-        {
-          "internalType": "contract IPool",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "GAAVEBadge",
-      "outputs": [
-        {
-          "internalType": "contract IGAAVEBadge",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "WETH",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "WETH_GATEWAY",
-      "outputs": [
-        {
-          "internalType": "contract IWETHGateway",
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "name": "allowance",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+        { "internalType": "address", "name": "spender", "type": "address" },
+        { "internalType": "uint256", "name": "amount", "type": "uint256" }
       ],
-      "name": "aTokenAddresses",
-      "outputs": [
-        {
-          "internalType": "contract IERC20",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "badgeIdCounter",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "campaignId",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "campaignOwner",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_claimant",
-          "type": "address"
-        }
-      ],
-      "name": "canClaim",
-      "outputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "eligibleBadges",
-          "type": "uint256[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        }
-      ],
-      "name": "claimBadge",
-      "outputs": [],
+      "name": "approve",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        }
+        { "internalType": "address", "name": "account", "type": "address" }
       ],
-      "name": "claimableETH",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_tokenAddress",
-          "type": "address"
-        }
-      ],
-      "name": "claimableToken",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_tokenAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "deposit",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        }
-      ],
-      "name": "depositETH",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "getCampaignCount",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_priceFeed",
-          "type": "address"
-        }
-      ],
-      "name": "getLatestPrice",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "index",
-          "type": "uint256"
-        }
-      ],
-      "name": "getTokenAddress",
-      "outputs": [
-        {
-          "internalType": "contract IERC20",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "token",
-          "type": "address"
-        }
-      ],
-      "name": "getTokenToPriceFeed",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "priceFeed",
-          "type": "address"
-        }
-      ],
+      "name": "balanceOf",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [],
-      "name": "poolImplementationLib",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
+      "name": "decimals",
+      "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }],
       "stateMutability": "view",
       "type": "function"
     },
     {
       "inputs": [
+        { "internalType": "address", "name": "spender", "type": "address" },
         {
-          "internalType": "uint256[]",
-          "name": "_thresholds",
-          "type": "uint256[]"
-        },
-        {
-          "internalType": "string[]",
-          "name": "_cids",
-          "type": "string[]"
+          "internalType": "uint256",
+          "name": "subtractedValue",
+          "type": "uint256"
         }
       ],
-      "name": "proposeCampaign",
-      "outputs": [],
+      "name": "decreaseAllowance",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+        { "internalType": "address", "name": "spender", "type": "address" },
+        { "internalType": "uint256", "name": "addedValue", "type": "uint256" }
       ],
-      "name": "tokenAddresses",
-      "outputs": [
-        {
-          "internalType": "contract IERC20",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "tokenToPriceFeed",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "userInfo",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "ethAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "timeEntered",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "powerAccumulated",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_tokenAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
-      ],
-      "name": "withdraw",
-      "outputs": [],
+      "name": "increaseAllowance",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_campaignId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        }
+        { "internalType": "uint256", "name": "value", "type": "uint256" }
       ],
-      "name": "withdrawETH",
-      "outputs": [],
+      "name": "mint",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "name",
+      "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "symbol",
+      "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "address", "name": "recipient", "type": "address" },
+        { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      ],
+      "name": "transfer",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        { "internalType": "address", "name": "sender", "type": "address" },
+        { "internalType": "address", "name": "recipient", "type": "address" },
+        { "internalType": "uint256", "name": "amount", "type": "uint256" }
+      ],
+      "name": "transferFrom",
+      "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
       "stateMutability": "nonpayable",
       "type": "function"
     }
-  ],
-  "transactionHash": "0xd36a37aec995091d34ff1a72a334643db6fb36522d2dd3bc8dc7b57152ca21f6",
-  "receipt": {
-    "to": null,
-    "from": "0x2C1CC2df33B3EC74Cc4fD83B539789f79f5c797B",
-    "contractAddress": "0x5174092a856D2d7B6E4471c36C85F25927dCF00C",
-    "transactionIndex": 7,
-    "gasUsed": "3533464",
-    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000008000002000000000000000000000000000000000000000000000000000800000000000000000040100000200000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000040000000104000000000000000000001000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000100000",
-    "blockHash": "0xbc1e48f0d81e97ae855360aaf6308ab9dfe2998e0dc0933f1ac700e7e915a821",
-    "transactionHash": "0xd36a37aec995091d34ff1a72a334643db6fb36522d2dd3bc8dc7b57152ca21f6",
-    "logs": [
-      {
-        "transactionIndex": 7,
-        "blockNumber": 27571265,
-        "transactionHash": "0xd36a37aec995091d34ff1a72a334643db6fb36522d2dd3bc8dc7b57152ca21f6",
-        "address": "0x0000000000000000000000000000000000001010",
-        "topics": [
-          "0x4dfe1bbbcf077ddc3e01291eea2d5c70c2b422b415d95645b9adcfd678cb1d63",
-          "0x0000000000000000000000000000000000000000000000000000000000001010",
-          "0x0000000000000000000000002c1cc2df33b3ec74cc4fd83b539789f79f5c797b",
-          "0x000000000000000000000000c275dc8be39f50d12f66b6a63629c39da5bae5bd"
-        ],
-        "data": "0x000000000000000000000000000000000000000000000000022c2061dc32b83800000000000000000000000000000000000000000000000073c9fe1eb62a2d2c0000000000000000000000000000000000000000000007cd849f372d9f116ca7000000000000000000000000000000000000000000000000719dddbcd9f774f40000000000000000000000000000000000000000000007cd86cb578f7b4424df",
-        "logIndex": 37,
-        "blockHash": "0xbc1e48f0d81e97ae855360aaf6308ab9dfe2998e0dc0933f1ac700e7e915a821"
-      }
-    ],
-    "blockNumber": 27571265,
-    "cumulativeGasUsed": "4535371",
-    "status": 1,
-    "byzantium": true
-  },
-  "args": [
-    "0x2a58E9bbb5434FdA7FF78051a4B82cb0EF669C17",
-    "0x6C9fB0D5bD9429eb9Cd96B85B81d872281771E6B",
-    "0xb685400156cF3CBE8725958DeAA61436727A30c3",
-    [
-      "0x9A753f0F7886C9fbF63cF59D0D4423C5eFaCE95B",
-      "0xb685400156cF3CBE8725958DeAA61436727A30c3"
-    ],
-    [
-      "0x9A753f0F7886C9fbF63cF59D0D4423C5eFaCE95B",
-      "0xb685400156cF3CBE8725958DeAA61436727A30c3"
-    ],
-    [
-      "0x0FCAa9c899EC5A91eBc3D5Dd869De833b06fB046",
-      "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada"
-    ],
-    "0x1E85B71b031Eb76BFE09b3551c09FDd2e8f20c90"
   ],
   "numDeployments": 1,
   "solcInputHash": "8aac20bfddc2e5cdb56dfe7f5ae699f7",
