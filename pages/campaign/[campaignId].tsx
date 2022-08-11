@@ -39,12 +39,12 @@ const CampaignPage = () => {
       campaignId as unknown as number,
       address!!
     );
-    // if (write) {
-    //   write({
-    //     recklesslySetUnpreparedArgs: campaignId,
-    //     recklesslySetUnpreparedOverrides: overridesArgs,
-    //   });
-    // }
+    if (write) {
+      write({
+        recklesslySetUnpreparedArgs: campaignId,
+        recklesslySetUnpreparedOverrides: overridesArgs,
+      });
+    }
   };
 
   const { loading: fetchingCampaigns, fetchData } = useFetchCampaign();

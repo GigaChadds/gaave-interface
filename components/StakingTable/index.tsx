@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import CountUp from "react-countup";
 import styles from "./index.module.scss";
 
@@ -8,9 +9,9 @@ import { useEffect, useState } from "react";
 import Modal from "../Modal";
 import { coinMap } from "../../utils/constants/token";
 import { MoonLoader } from "react-spinners";
-import useFetchTokenBalance from "../../hooks/useFetchTokenBalance";
-import useClaimYield from "../../hooks/useClaimYield";
-import { useAccount } from "wagmi";
+import useFetchTokenBalance from "../../hooks/useFetchStakedTokenBalance";
+import { useAccount, useContract, useContractRead, useProvider } from "wagmi";
+import { getERC20TokenContract } from "../../utils/contracts";
 
 export enum ActionType {
   WITHDRAWAL = "Withdrawal",
@@ -32,20 +33,23 @@ interface GraphQLAaveCrypto {
 
 export interface GraphQLAaveCrypto_Balance extends GraphQLAaveCrypto {
   balance: number;
+  staked: number;
+  claimable: number;
 }
 
 const StakingTable = ({ campaignId }: { campaignId: number }) => {
   const { data, loading } = useQuery(QUERY_RESERVES, {
     context: { clientName: "aave" },
   });
+  const provider = useProvider();
 
   const { address } = useAccount();
 
-  const { loading: fetchingTokenBalance, fetchData } = useFetchTokenBalance();
+  const { loading: fetchingTokenBalance, fetchData: fetchStakedTokenBalance } =
+    useFetchTokenBalance();
 
   const [tokens, setTokens] = useState<any>([]);
   const [displayModal, setDisplayModal] = useState<boolean>(false);
-  // This one can be a object of the token type, like tokenId, tokenName, currentAmount that the person has
   const [selectedToken, setSelectedToken] = useState<GraphQLAaveCrypto_Balance>(
     {
       aEmissionPerSecond: "",
@@ -59,6 +63,8 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
       vEmissionPerSecond: "",
       variableBorrowRate: "",
       balance: 0,
+      staked: 0,
+      claimable: 0,
     }
   );
   const [type, setType] = useState<ActionType>(ActionType.DEPOSIT);
@@ -67,37 +73,32 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
     const _data = data.reserves;
 
     const output = _data.map(async (crypto: GraphQLAaveCrypto) => {
-      const tokenBal = await fetchData(crypto.underlyingAsset);
+      const contractObj = getERC20TokenContract(crypto.underlyingAsset);
+      let tokenBalance;
+      let claimable;
+
+      if (!contractObj) {
+        tokenBalance = 0;
+      } else {
+        try {
+          const contract = contractObj.connect(provider);
+          tokenBalance = await contract.balanceOf(address);
+        } catch (error) {
+          tokenBalance = 0;
+        }
+      }
+
+      const stakedTokenBal = await fetchStakedTokenBalance(
+        crypto.underlyingAsset
+      );
       return {
         ...crypto,
-        balance: tokenBal.data ? tokenBal.data : 10, // Remember to replace dummy 10 into 0;
+        balance: Number(tokenBalance),
+        staked: stakedTokenBal.data ? stakedTokenBal.data : 0,
       };
     });
     const awaited_output = await Promise.all(output);
     setTokens(awaited_output);
-  };
-
-  const {
-    transactionHash,
-    isClaiming,
-    error,
-    write,
-    reset,
-    prepareOverridesArgs,
-  } = useClaimYield();
-
-  const claimYield = async (tokenAddress: string) => {
-    const overridesArgs = await prepareOverridesArgs(
-      campaignId as unknown as number,
-      tokenAddress as unknown as string,
-      address!!
-    );
-    if (write) {
-      write({
-        recklesslySetUnpreparedArgs: [campaignId, tokenAddress],
-        recklesslySetUnpreparedOverrides: overridesArgs,
-      });
-    }
   };
 
   useEffect(() => {
@@ -108,7 +109,6 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
 
   return (
     <>
-      {console.log(data)}
       <table className={styles.container}>
         {loading ? (
           <tr className={styles.container_loader}>
@@ -156,7 +156,7 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
                 <td>
                   <CountUp
                     start={0}
-                    end={crypto.balance}
+                    end={crypto.staked}
                     decimals={4}
                     duration={2}
                   />
@@ -191,12 +191,6 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
                   >
                     Deposit
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => claimYield(crypto.underlyingAsset)}
-                  >
-                    Claim Yield
-                  </button>
                 </td>
               </tr>
             ))}
@@ -206,10 +200,11 @@ const StakingTable = ({ campaignId }: { campaignId: number }) => {
 
       {displayModal && (
         <Modal
+          campaignId={campaignId}
           selectedToken={selectedToken.name}
           selectedTokenBalance={selectedToken.balance}
           selectedTokenAddress={selectedToken.underlyingAsset}
-          selectedTokenVestedAmount={100}
+          selectedTokenStakedAmount={selectedToken.staked}
           closeModal={() => setDisplayModal(false)}
           actionType={type}
         />

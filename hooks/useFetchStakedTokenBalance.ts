@@ -1,9 +1,8 @@
 import { useState } from "react";
-import envConfig from "../utils/envConfig";
 import { getWagmiContractParams } from "../utils/contracts";
 import { useAccount, useContract } from "wagmi";
 
-const useFetchTokenBalance = () => {
+const useFetchStakedTokenBalance = () => {
   const contractParams = getWagmiContractParams();
   const NFTContract = useContract(contractParams);
 
@@ -39,4 +38,4 @@ const useFetchTokenBalance = () => {
   return { loading, fetchData };
 };
 
-export default useFetchTokenBalance;
+export default useFetchStakedTokenBalance;
