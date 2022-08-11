@@ -17,8 +17,9 @@ const useFetchClaimedBadges = () => {
       if (!badgeContract) {
         return { data: null, error: "Contract does not exist" };
       }
-      // const badges:any[] = []
-      const totalBadges = await badgeContract.balanceOf(address);
+      const badges:any[] = []
+      // const totalBadges = await badgeContract.tokenSupply();
+      // console.log('totalBadges',totalBadges)
       // //   TODO use new claimedBadges for ids
       // for (let i = 1; i <= totalBadges; i++){
       //   const uri  = await badgeContract.uri(i);
@@ -26,7 +27,7 @@ const useFetchClaimedBadges = () => {
       //   console.log(uri)
       // }
       setLoading(false);
-      return { data: totalBadges, error: null };
+      return { data: badges, error: null };
     } catch (error) {
       console.log("Error from useFetchClaimedBadges", error);
       setLoading(false);

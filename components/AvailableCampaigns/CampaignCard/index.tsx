@@ -1,12 +1,26 @@
 import styles from "./index.module.scss";
 import Link from "next/link";
 import CountUp from "react-countup";
+import useFetchCampaign from "../../../hooks/useFetchCampaign";
+import { useEffect, useState } from "react";
 
 const CampaignCard = ({ data }: { data: any }) => {
+  const { loading: fetchingCampaigns, fetchData } = useFetchCampaign(data.campaignId?data.campaignId:'0xc693b9ec6aaeed78a793024c4b6ffa1ffc470bf2');
+  const [campaignYield, setCampaignYield] = useState(0)
+  const fetchCampaigns = async () => {
+    const output = await fetchData()
+    setCampaignYield(output.data as any)
+  };
+
+  useEffect(
+    () => {
+      fetchCampaigns();
+    }, [data])
+
   return (
     <div className={styles.container}>
       <div className={styles.main}>
-        <h3>{data.title}</h3>
+        <h3>{data.title?data.title:'Test Campaign'}</h3>
         <div className={styles.main_info}>
           <p>
             Backers:
@@ -14,20 +28,22 @@ const CampaignCard = ({ data }: { data: any }) => {
           </p>
           <span></span>
           <p>
+            {/* 1 */}
             Target Amount:
             <CountUp
               start={0}
-              end={data.targetAmount}
+              end={data.targetAmount?data.targetAmount: 100}
               decimals={0}
               duration={2}
             />
           </p>
           <span></span>
           <p>
+            {/* calculateYield */}
             Raised Amount:
             <CountUp
               start={0}
-              end={data.raisedAmount}
+              end={+campaignYield.toString()}
               decimals={0}
               duration={2}
             />

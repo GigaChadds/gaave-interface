@@ -12,11 +12,9 @@ import useFetchCampaign from "../../hooks/useFetchCampaign";
 const mockCampaignData = {
   organization: "GEN3 Studios",
   contactPersonEmail: "contact.gen3.pro",
-  title: "Raise $500,000 funds for drought in XXX city",
+  title: "Raise $100 funds for drought in XXX city",
   description:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  targetAmount: 500_000,
-  raisedAmount: 210_098,
 };
 
 const CampaignPage = () => {
@@ -26,11 +24,7 @@ const CampaignPage = () => {
   const { campaignId } = router.query;
 
   const {
-    transactionHash,
-    isMinting,
-    error,
     write,
-    reset,
     prepareOverridesArgs,
   } = useMintBadge();
 
@@ -46,18 +40,15 @@ const CampaignPage = () => {
       });
     }
   };
-
-  const { loading: fetchingCampaigns, fetchData } = useFetchCampaign();
-  const fetchCampaign = async (campaignId: number) => {
-    const output = await fetchData(campaignId);
-    setCampaignData(output)
+  const { fetchData } = useFetchCampaign(typeof campaignId === 'string' || campaignId instanceof String ?campaignId as string:'0xc693b9ec6aaeed78a793024c4b6ffa1ffc470bf2');
+  const [campaignYield, setCampaignYield] = useState(0)
+  const fetchCampaigns = async () => {
+    const output = await fetchData()
+    setCampaignYield(output.data as any)
   };
 
   useEffect(() => {
-    if (campaignId && +campaignId) {
-      // TODO: format data further
-      fetchCampaign(+campaignId)
-    }
+    fetchCampaigns()
   }, [campaignId]);
 
   return (
@@ -66,8 +57,8 @@ const CampaignPage = () => {
       <div className={styles.main}>
         <h2>{campaignData.title}</h2>
         <ProgressBar
-          maxValue={campaignData.targetAmount}
-          currentValue={campaignData.raisedAmount}
+          maxValue={campaignData.targetAmount?campaignData.targetAmount:100}
+          currentValue={campaignYield?+campaignYield.toString(): 0}
         />
         <p>{campaignData.description}</p>
         <p className={styles.main_poc}>

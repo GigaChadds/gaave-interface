@@ -1,26 +1,23 @@
 import { useState } from "react";
-import { getWagmiContractParams } from "../utils/contracts";
-import { useAccount, useContract } from "wagmi";
+import { getPoolContract, getWagmiContractParams } from "../utils/contracts";
+import { useContract, useProvider } from "wagmi";
 
-const useFetchCampaign = () => {
-  const contractParams = getWagmiContractParams();
-  const NFTContract = useContract(contractParams);
-
+const useFetchCampaign = (pool: string) => {
+  const contractParams = getPoolContract(pool);
+  const account = useProvider()
+  const poolContract = useContract({...contractParams, signerOrProvider:account});
   const [loading, setLoading] = useState<boolean>(true);
 
-  const { address } = useAccount();
-
-  const fetchData = async (campaignId: number) => {
+  const fetchData = async () => {
     setLoading(true);
 
     try {
-      if (!NFTContract) {
+      if (!poolContract) {
         return { data: null, error: "Contract does not exist" };
       }
-
-      const campaignInfo = await NFTContract.campaigns(campaignId);
+      const res = await poolContract.calculateYield();
       setLoading(false);
-      return { data: campaignInfo, error: null };
+      return { data: res, error: null };
     } catch (error) {
       console.log("Error from fetchCampaign", error);
       setLoading(false);

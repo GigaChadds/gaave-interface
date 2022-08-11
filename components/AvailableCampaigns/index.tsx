@@ -73,27 +73,28 @@ const listOfCampaigns = [
 ];
 
 const AvailableCampaigns = () => {
-  const { data, loading } = useQuery(QUERY_CAMPAIGNS, {
-    context: { clientName: "gaave" },
-  });
-  const [campaigns, setCampaigns] = useState<any[]>([])
-  const { loading: fetchingCampaigns, fetchData } = useFetchCampaign();
-  const fetchCampaigns = async (campaignId: number[]) => {
-    const output = campaignId.map(async (id) => await fetchData(id));
-    const awaited_output = await Promise.all(output);
-    setCampaigns(awaited_output)
-    // TODO: format data further
-  };
-
-  useEffect(
-    () => {
-      if( data ){
-        const campaignIds = data.campaigns.map((campaign:any) => campaign._campaignId)
-        if (campaignIds.length) {
-          fetchCampaigns(campaignIds);
+  const { data } = {
+    data: {
+      campaigns: [
+        {
+          id:'0x2b29be18131941c2a1e1aba072f917e30d7b45ecc937f22d2249ee32e2f74632',
+          _campaignAddress: '0xc693b9ec6aaeed78a793024c4b6ffa1ffc470bf2',
+          _campaignId:1
         }
-      }
-    }, [data])
+      ]
+    }
+  }
+
+  // useEffect(
+  //   () => {
+  //     if( data ){
+  //       const campaignIds = data.campaigns.map((campaign:any) => campaign._campaignId)
+  //       console.log(campaignIds)
+  //       if (campaignIds.length) {
+  //         fetchCampaigns(campaignIds);
+  //       }
+  //     }
+  //   }, [data])
 
   return (
     <div className={styles.container}>
@@ -108,8 +109,8 @@ const AvailableCampaigns = () => {
         </div>
 
         <ul className={styles.content}>
-          {campaigns.map((campaign) => (
-            <li key={campaign.campaignId}>
+          {data.campaigns.map((campaign) => (
+            <li key={campaign._campaignId}>
               <CampaignCard data={campaign} />
             </li>
           ))}

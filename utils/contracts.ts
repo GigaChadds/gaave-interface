@@ -23,6 +23,22 @@ export const getWagmiContractParams = () => {
     };
   }
 };
+export const getPoolContract = (tokenAddress: string) => {
+  try {
+    // const contract = require(`../contracts/${chain}/${envConfig.CONTRACT_NAME}.json`);
+    const contract = require(`../contracts/mumbai/GAAVEPool.json`);
+    return {
+      addressOrName: tokenAddress,
+      contractInterface: contract.abi,
+    };
+  } catch (error) {
+    console.log("[Badge] Contract does not exist!");
+    return {
+      addressOrName: tokenAddress,
+      contractInterface: [],
+    };
+  }
+}
 
 export const getBadgeContractParams = () => {
   try {
