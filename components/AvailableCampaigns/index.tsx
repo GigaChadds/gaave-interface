@@ -1,6 +1,10 @@
 import styles from "./index.module.scss";
 import Link from "next/link";
 import CampaignCard from "./CampaignCard";
+import { useQuery } from "@apollo/client";
+import QUERY_CAMPAIGNS from "./campaign.graphql";
+import { useEffect, useState } from "react";
+import useFetchCampaign from "../../hooks/useFetchCampaign";
 
 const listOfCampaigns = [
   {
@@ -69,6 +73,28 @@ const listOfCampaigns = [
 ];
 
 const AvailableCampaigns = () => {
+  const { data, loading } = useQuery(QUERY_CAMPAIGNS, {
+    context: { clientName: "gaave" },
+  });
+  const [campaigns, setCampaigns] = useState<any[]>([])
+  const { loading: fetchingCampaigns, fetchData } = useFetchCampaign();
+  const fetchCampaigns = async (campaignId: number[]) => {
+    const output = campaignId.map(async (id) => await fetchData(id));
+    const awaited_output = await Promise.all(output);
+    setCampaigns(awaited_output)
+    // TODO: format data further
+  };
+
+  useEffect(
+    () => {
+      if( data ){
+        const campaignIds = data.campaigns.map((campaign:any) => campaign._campaignId)
+        if (campaignIds.length) {
+          fetchCampaigns(campaignIds);
+        }
+      }
+    }, [data])
+
   return (
     <div className={styles.container}>
       <div className={styles.main}>
@@ -82,7 +108,7 @@ const AvailableCampaigns = () => {
         </div>
 
         <ul className={styles.content}>
-          {listOfCampaigns.map((campaign) => (
+          {campaigns.map((campaign) => (
             <li key={campaign.campaignId}>
               <CampaignCard data={campaign} />
             </li>

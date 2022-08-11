@@ -7,6 +7,7 @@ import useMintBadge from "../../hooks/useMintBadge";
 import styles from "../../styles/Campaign.module.scss";
 import { useRouter } from "next/router";
 import useClaimYield from "../../hooks/useClaimYield";
+import useFetchCampaign from "../../hooks/useFetchCampaign";
 
 const mockCampaignData = {
   organization: "GEN3 Studios",
@@ -46,9 +47,16 @@ const CampaignPage = () => {
     // }
   };
 
+  const { loading: fetchingCampaigns, fetchData } = useFetchCampaign();
+  const fetchCampaign = async (campaignId: number) => {
+    const output = await fetchData(campaignId);
+    setCampaignData(output)
+  };
+
   useEffect(() => {
-    if (campaignId) {
-      // TODO: Fetch campaign details from subgraph and do setCampaignData
+    if (campaignId && +campaignId) {
+      // TODO: format data further
+      fetchCampaign(+campaignId)
     }
   }, [campaignId]);
 

@@ -1,0 +1,8 @@
+{
+  campaigns {
+    id
+    _campaignAddress
+    _campaignId
+    _thresholds
+  }
+}
