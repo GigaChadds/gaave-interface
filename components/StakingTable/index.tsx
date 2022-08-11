@@ -54,7 +54,7 @@ const StakingTable = () => {
             <CountUp start={0} end={crypto.balance} decimals={4} duration={2} />
           </td>
           <td>
-            <CountUp start={0} end={crypto.liquidityRate/Math.pow(10,27)} decimals={2} duration={2} />%
+            <CountUp start={0} end={crypto.liquidityRate/Math.pow(10,25)} decimals={2} duration={2} />%
           </td>
           <td className={styles.container_actionables}>
             <button type="button" onClick={() => {}}>
