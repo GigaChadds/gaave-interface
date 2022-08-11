@@ -11,7 +11,7 @@ export const getWagmiContractParams = () => {
 
   try {
     // const contract = require(`../contracts/${chain}/${envConfig.CONTRACT_NAME}.json`);
-    const contract = require(`../contracts/mainnet/${envConfig.CONTRACT_NAME}.json`);
+    const contract = require(`../contracts/mumbai/${envConfig.CONTRACT_NAME}.json`);
 
     return {
       addressOrName: envConfig.CONTRACT_ADDRESS,

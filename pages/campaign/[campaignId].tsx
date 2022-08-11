@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import Meta from "../../components/Meta";
 import ProgressBar from "../../components/ProgressBar";
 import StakingTable from "../../components/StakingTable";
+import useMintBadge from "../../hooks/useMintBadge";
 import styles from "../../styles/Campaign.module.scss";
+import { useRouter } from "next/router";
+import useClaimYield from "../../hooks/useClaimYield";
 
 const mockCampaignData = {
   organization: "GEN3 Studios",
@@ -16,6 +20,37 @@ const mockCampaignData = {
 
 const CampaignPage = () => {
   const [campaignData, setCampaignData] = useState<any>(mockCampaignData);
+  const { address } = useAccount();
+  const router = useRouter();
+  const { campaignId } = router.query;
+
+  const {
+    transactionHash,
+    isMinting,
+    error,
+    write,
+    reset,
+    prepareOverridesArgs,
+  } = useMintBadge();
+
+  const claimBadge = async () => {
+    const overridesArgs = await prepareOverridesArgs(
+      campaignId as unknown as number,
+      address!!
+    );
+    // if (write) {
+    //   write({
+    //     recklesslySetUnpreparedArgs: campaignId,
+    //     recklesslySetUnpreparedOverrides: overridesArgs,
+    //   });
+    // }
+  };
+
+  useEffect(() => {
+    if (campaignId) {
+      // TODO: Fetch campaign details from subgraph and do setCampaignData
+    }
+  }, [campaignId]);
 
   return (
     <div className={styles.container}>
@@ -35,14 +70,14 @@ const CampaignPage = () => {
         <div className={styles.others}>
           <div>
             <p>You are eligible to claim for your milestone NFT!</p>
-            <button>Claim</button>
+            <button onClick={claimBadge}>Claim</button>
           </div>
           <div>
             <p>You have outstanding yield to claim</p>
-            <button>Claim</button>
+            {/* <button>Claim</button> */}
           </div>
         </div>
-        <StakingTable />
+        <StakingTable campaignId={campaignId as unknown as number} />
       </div>
     </div>
   );

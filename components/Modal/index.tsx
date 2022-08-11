@@ -1,16 +1,22 @@
 import styles from "./index.module.scss";
 import { VscChromeClose } from "react-icons/vsc";
 import { coinMap } from "../../utils/constants/token";
-import { ActionType } from "../StakingTable";
+import { ActionType, GraphQLAaveCrypto_Balance } from "../StakingTable";
 import { useState } from "react";
 import Image from "next/image";
 
 const Modal = ({
   selectedToken,
+  selectedTokenBalance,
+  selectedTokenAddress,
+  selectedTokenVestedAmount,
   closeModal,
   actionType,
 }: {
   selectedToken: string;
+  selectedTokenBalance: number;
+  selectedTokenAddress: string;
+  selectedTokenVestedAmount: number;
   closeModal: () => void;
   actionType: ActionType;
 }) => {
@@ -41,7 +47,20 @@ const Modal = ({
             value={amount}
             onChange={(e) => setAmount(e.target.value as unknown as number)}
           />
-          <span onClick={() => setAmount(100)}>Max: 00</span>
+          <span
+            onClick={() =>
+              setAmount(
+                actionType === ActionType.DEPOSIT
+                  ? selectedTokenBalance
+                  : selectedTokenVestedAmount
+              )
+            }
+          >
+            Max:{" "}
+            {actionType === ActionType.DEPOSIT
+              ? selectedTokenBalance
+              : selectedTokenVestedAmount}
+          </span>
         </div>
 
         <div className={styles.actionable}>

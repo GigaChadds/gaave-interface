@@ -6,6 +6,8 @@ import Badge3 from "../../public/assets/badges/Badge3.png";
 import Badge4 from "../../public/assets/badges/Badge4.png";
 import Badge5 from "../../public/assets/badges/Badge5.png";
 import Image from "next/image";
+import useFetchClaimableBadges from "../../hooks/useFetchClaimableBadges";
+import { useEffect } from "react";
 
 const listOfUnclaimedBadges = [
   {
@@ -29,6 +31,28 @@ const listOfUnclaimedBadges = [
 const listOfClaimedBadge = [Badge1, Badge2, Badge3, Badge4, Badge5];
 
 const CurrentBadges = () => {
+  const { loading: fetchingBadges, fetchData } = useFetchClaimableBadges();
+
+  const fetchClaimableBadges = async (campaignId: number[]) => {
+    const output = campaignId.map(async (id) => await fetchData(id));
+    const awaited_output = await Promise.all(output);
+    console.log(awaited_output);
+    // TODO: Display this data
+  };
+
+  useEffect(
+    () => {
+      // TODO: Once you have the list of campaignIds from subgraphs, call fetchData on each campaignId to get the list of claimableBadges
+      const mockListOfCampaignId = [1, 2, 3, 4, 5];
+      if (mockListOfCampaignId) {
+        fetchClaimableBadges(mockListOfCampaignId);
+      }
+    },
+    [
+      // TODO: Should be something along the lines of fetching the list of campaigns from subgraphs
+    ]
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.main}>
