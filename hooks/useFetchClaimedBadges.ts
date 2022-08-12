@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { getBadgeContractParams, getWagmiContractParams } from "../utils/contracts";
-import { useAccount, useContract } from "wagmi";
+import {
+  getBadgeContractParams,
+  getWagmiContractParams,
+} from "../utils/contracts";
+import { useAccount, useContract, useProvider } from "wagmi";
 
 const useFetchClaimedBadges = () => {
   const contractParams = getBadgeContractParams();
-  const badgeContract = useContract(contractParams);
+  const provider = useProvider();
+  const badgeContract = useContract({
+    ...contractParams,
+    signerOrProvider: provider,
+  });
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -17,7 +24,7 @@ const useFetchClaimedBadges = () => {
       if (!badgeContract) {
         return { data: null, error: "Contract does not exist" };
       }
-      const badges:any[] = []
+      const badges: any[] = [];
       // const totalBadges = await badgeContract.tokenSupply();
       // console.log('totalBadges',totalBadges)
       // //   TODO use new claimedBadges for ids

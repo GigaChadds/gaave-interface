@@ -6,7 +6,6 @@ import StakingTable from "../../components/StakingTable";
 import useMintBadge from "../../hooks/useMintBadge";
 import styles from "../../styles/Campaign.module.scss";
 import { useRouter } from "next/router";
-import useClaimYield from "../../hooks/useClaimYield";
 import useFetchCampaign from "../../hooks/useFetchCampaign";
 
 const mockCampaignData = {
@@ -23,10 +22,7 @@ const CampaignPage = () => {
   const router = useRouter();
   const { campaignId } = router.query;
 
-  const {
-    write,
-    prepareOverridesArgs,
-  } = useMintBadge();
+  const { write, prepareOverridesArgs } = useMintBadge();
 
   const claimBadge = async () => {
     const overridesArgs = await prepareOverridesArgs(
@@ -40,15 +36,19 @@ const CampaignPage = () => {
       });
     }
   };
-  const { fetchData } = useFetchCampaign(typeof campaignId === 'string' || campaignId instanceof String ?campaignId as string:'0xc693b9ec6aaeed78a793024c4b6ffa1ffc470bf2');
-  const [campaignYield, setCampaignYield] = useState(0)
+  const { fetchData } = useFetchCampaign(
+    typeof campaignId === "string" || campaignId instanceof String
+      ? (campaignId as string)
+      : "0xc693b9ec6aaeed78a793024c4b6ffa1ffc470bf2"
+  );
+  const [campaignYield, setCampaignYield] = useState(0);
   const fetchCampaigns = async () => {
-    const output = await fetchData()
-    setCampaignYield(output.data as any)
+    const output = await fetchData();
+    setCampaignYield(output.data as any);
   };
 
   useEffect(() => {
-    fetchCampaigns()
+    fetchCampaigns();
   }, [campaignId]);
 
   return (
@@ -57,8 +57,8 @@ const CampaignPage = () => {
       <div className={styles.main}>
         <h2>{campaignData.title}</h2>
         <ProgressBar
-          maxValue={campaignData.targetAmount?campaignData.targetAmount:100}
-          currentValue={campaignYield?+campaignYield.toString(): 0}
+          maxValue={campaignData.targetAmount ? campaignData.targetAmount : 100}
+          currentValue={campaignYield ? +campaignYield.toString() : 0}
         />
         <p>{campaignData.description}</p>
         <p className={styles.main_poc}>

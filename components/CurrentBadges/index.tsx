@@ -39,35 +39,33 @@ const CurrentBadges = () => {
   });
 
   const { loading: fetchingBadges, fetchData } = useFetchClaimableBadges();
-  const { loading: fetchingClaimedBadges, fetchClaimedBadges } = useFetchClaimedBadges();
+  const { loading: fetchingClaimedBadges, fetchClaimedBadges } =
+    useFetchClaimedBadges();
 
-  const [claimableBadges, setClaimableBadges] = useState<any[]>([])
+  const [claimableBadges, setClaimableBadges] = useState<any[]>([]);
   const fetchClaimableBadges = async (campaignId: number[]) => {
     const output = campaignId.map(async (id) => await fetchData(id));
     const awaited_output = await Promise.all(output);
     console.log(awaited_output);
-    setClaimableBadges(awaited_output)
+    setClaimableBadges(awaited_output);
     // TODO: Display this data
   };
 
-  const [claimedBadges, setClaimedBadges] = useState<number>(0)
+  const [claimedBadges, setClaimedBadges] = useState<any>(0);
   const fetchClaimedBadge = async () => {
-    const output = await fetchClaimedBadges()
-    setClaimedBadges(output.data)
+    const output = await fetchClaimedBadges();
+    setClaimedBadges(output.data);
     // TODO: Display this data
   };
 
-  useEffect(
-    () => {
-      if (data) {
-        fetchClaimableBadges(data.campaigns.map((campaign:any) => campaign._campaignId));
-      }
-      fetchClaimedBadge()
-    },
-    [
-      loading
-    ]
-  );
+  useEffect(() => {
+    if (data) {
+      fetchClaimableBadges(
+        data.campaigns.map((campaign: any) => campaign._campaignId)
+      );
+    }
+    fetchClaimedBadge();
+  }, [loading]);
 
   return (
     <div className={styles.container}>

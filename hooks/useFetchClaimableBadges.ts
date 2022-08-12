@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { getWagmiContractParams } from "../utils/contracts";
-import { useAccount, useContract } from "wagmi";
+import { useAccount, useContract, useProvider } from "wagmi";
 
 const useFetchClaimableBadges = () => {
   const contractParams = getWagmiContractParams();
-  const NFTContract = useContract(contractParams);
+  const provider = useProvider();
+  const NFTContract = useContract({
+    ...contractParams,
+    signerOrProvider: provider,
+  });
 
   const [loading, setLoading] = useState<boolean>(true);
 
